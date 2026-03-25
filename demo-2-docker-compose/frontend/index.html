@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Microservices Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 600px;
+            text-align: center;
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+        .status {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f0f0f0;
+            border-radius: 10px;
+        }
+        button {
+            padding: 15px 40px;
+            font-size: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: scale(1.05);
+        }
+        #result {
+            margin-top: 30px;
+            font-size: 24px;
+            color: #333;
+        }
+        .info {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🐳 Multi-Container Demo</h1>
+        <div class="status">
+            <p><strong>Frontend Container:</strong> ✅ Running</p>
+            <p><strong>Backend Container:</strong> <span id="backend-status">Checking...</span></p>
+        </div>
+        <p style="margin: 20px 0;">Frontend talking to Backend via Docker network</p>
+        <button onclick="getCount()">Get Visitor Count</button>
+        <div id="result"></div>
+        <div class="info">
+            <p>💡 Each click increments the counter in backend</p>
+            <p>🔄 Containers communicate via internal network</p>
+        </div>
+    </div>
+
+    <script>
+        async function checkBackend() {
+            try {
+                const response = await fetch('http://localhost:5000/api/health');
+                const data = await response.json();
+                document.getElementById('backend-status').innerHTML = '✅ Running';
+            } catch (error) {
+                document.getElementById('backend-status').innerHTML = '❌ Not responding';
+            }
+        }
+
+        async function getCount() {
+            try {
+                const response = await fetch('http://localhost:5000/api/count');
+                const data = await response.json();
+                document.getElementById('result').innerHTML = `
+                    <div style="background: #667eea; color: white; padding: 20px; border-radius: 10px;">
+                        <h2>🎉 Visitors: ${data.count}</h2>
+                        <p>${data.message}</p>
+                        <p style="font-size: 14px; margin-top: 10px;">
+                            Uptime: ${data.uptime}
+                        </p>
+                    </div>
+                `;
+            } catch (error) {
+                document.getElementById('result').innerHTML = 
+                    '<p style="color: red;">❌ Error connecting to backend!</p>';
+            }
+        }
+
+        // Check backend on load
+        checkBackend();
+    </script>
+</body>
+</html>
