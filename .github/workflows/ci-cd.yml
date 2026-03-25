@@ -127,7 +127,7 @@ jobs:
           exit 1
         fi
         
-        if [ "$version" = "1.0.1" ]; then
+        if [ "$version" = "1.0.0" ]; then
           echo "✅ Version field correct"
         else
           echo "❌ Version field incorrect: $version"
