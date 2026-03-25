@@ -95,7 +95,7 @@ Feel free to fork this repository and submit pull requests!
 
 **Vaibhav**  
 Lead DevOps Engineer, PaloAlto Soft  
-LinkedIn: [Your LinkedIn Profile]
+LinkedIn: https://www.linkedin.com/in/vaibhav-jain-5a8a981aa/
 
 ## 📝 License
 
