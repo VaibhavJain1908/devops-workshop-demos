@@ -14,15 +14,15 @@ app.get('/api/count', (req, res) => {
     count: visitors,
     message: 'Backend running in container!',
     timestamp: new Date(),
-    uptime: Math.floor((new Date() - startTime) / 1000) + ' seconds'
+    uptime: Math.floor((new Date() - startTime) / 1000) + ' seconds',
+    container: require('os').hostname()
   });
 });
 
 app.get('/api/health', (req, res) => {
   res.json({ 
     status: 'healthy',
-    service: 'backend',
-    container: require('os').hostname()
+    service: 'backend'
   });
 });
 
