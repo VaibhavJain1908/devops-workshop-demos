@@ -3,7 +3,8 @@ const app = express();
 const PORT = 3000;
 
 app.get('/', (req, res) => {
-  res.send(`
+  const hostname = require('os').hostname();
+  const html = `
     <html>
       <head>
         <title>Docker Demo</title>
@@ -28,13 +29,12 @@ app.get('/', (req, res) => {
         <div class="container">
           <h1>🐳 Hello from Docker!</h1>
           <p>This app is running inside a container</p>
-          <p><strong>Container ID:</strong> ${require('os').hostname()}</p>
-          <p><strong>Platform:</strong> ${process.platform}</p>
-          <p><strong>Node Version:</strong> ${process.version}</p>
+          <p><strong>Container ID:</strong> ${hostname}</p>
         </div>
       </body>
     </html>
-  `);
+  `;
+  res.send(html);
 });
 
 app.get('/health', (req, res) => {
@@ -42,5 +42,5 @@ app.get('/health', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(\`Server running on port \${PORT}\`);
+  console.log('Server running on port ' + PORT);
 });
