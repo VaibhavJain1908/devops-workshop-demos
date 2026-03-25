@@ -3,12 +3,9 @@ name: CI/CD Pipeline
 on:
   push:
     branches: [ main ]
-    paths:
-      - 'demo-4-cicd/**'
+
   pull_request:
     branches: [ main ]
-    paths:
-      - 'demo-4-cicd/**'
 
 jobs:
   test:
